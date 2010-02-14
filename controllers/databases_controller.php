@@ -2,7 +2,8 @@
 class DatabasesController extends AppController {
 
 	var $name = 'Databases';
-        var $helpers=array('Form');
+        var $helpers=array('Form','Session');
+
 	function index() {
 		$this->Database->recursive = 0;
 		$this->set('databases', $this->paginate());
@@ -59,5 +60,19 @@ class DatabasesController extends AppController {
 		$this->Session->setFlash(sprintf(__('%s was not deleted', true), 'Database'));
 		$this->redirect(array('action' => 'index'));
 	}
+
+        function select($id = null) {
+                if (!$id) {
+                        $this->Session->setFlash(sprintf(__('Invalid id for %s', true), 'database'));
+                        $this->redirect(array('action'=>'/'));
+                }
+                if ($this->Database->select($id)) {
+                        $this->Session->setFlash(sprintf(__('%s now selected', true), 'Database'));
+                        $this->Session->write('Database.selected', $id);
+                        $this->redirect(array('action'=>'/'));
+                }
+                $this->Session->setFlash(sprintf(__('%s was not selected', true), 'Database'));
+                $this->redirect(array('action' => '/'));
+        }
 }
 ?>

@@ -102,7 +102,7 @@ class PlainMysqlSource extends DboMysql {
                         return $result;
                         break;
                     default:
-                        return $databases;
+                        return $tables;
                         break;
                 }
                 break;

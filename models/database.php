@@ -35,6 +35,20 @@ class Database extends AppModel {
                                 'counterQuery' => ''
                 )
 	);
-   
+        /**
+         * Selects the database, synonymous to the "USE"
+         * command in MySQL.
+         * @param int $id The id of the database
+         */
+        function select($id){
+            $databases = $this->find('all');
+            foreach($databases as $database){
+                if ($database['Database']['id'] == $id){
+                    $this->query("USE {$database['Database']}");
+                    return true;
+                }
+            }
+            return false;
+        }
 }
 ?>

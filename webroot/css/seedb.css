@@ -1,0 +1,45 @@
+#header { border-bottom: solid 1px #000; }
+#footer { border-top: solid 1px #000; }
+
+#content {
+    
+}
+
+.databases.list {
+    margin: 10px;
+}
+.databases .name, .databases .warning {
+    /* overall style settings for .name in seedb/index */
+    font: normal normal 10px "Tahoma";
+}
+.databases.list > .database {
+    border: solid 1px #000; border-bottom: none;
+    width: 200px;
+}
+        /* see .database.list > .database#border */
+        .databases.list > .database:last-child { border-bottom: solid 1px #000; }
+.databases > .database >.name {
+    background: #fc0;
+    display: block; /* to fill the width of .database */
+    padding: 5px;
+}
+.databases > .database > .tables > .table,
+.databases > .database > .tables > .warning /* To include "No tables found" */
+{
+    margin: 3px;
+}
+.databases > .database > .tables > .table > .name {
+    
+}
+.commands {
+    
+    margin: 10px;
+}
+.commands > .command {
+    
+    margin: 10px;
+}
+.commands > .command > span {
+    display: block;
+
+}

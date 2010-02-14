@@ -27,7 +27,7 @@
  * its action called 'display', and we pass a param to select the view file
  * to use (in this case, /app/views/pages/start.ctp)...
  */
-	Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'start'));
+	Router::connect('/', array('controller' => 'seedb', 'action' => 'index'));
 
 /**
  * ...and connect the rest of 'Pages' controller's urls.
