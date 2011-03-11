@@ -50,7 +50,7 @@
  *
  */
 	if (!defined('CAKE_CORE_INCLUDE_PATH')) {
-		define('CAKE_CORE_INCLUDE_PATH', 'D:' . DS . 'Programming' . DS . 'CakePHP' . DS . 'Builds' . DS . 'cakephp1x' . DS . 'cakephp1x');
+		define('CAKE_CORE_INCLUDE_PATH', '/Users/sonnygauran/Programming/CakePHP/Builds/cakephp1.3.3');
 	}
 
 /**

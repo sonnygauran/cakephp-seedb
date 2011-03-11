@@ -9,10 +9,10 @@ class DATABASE_CONFIG {
 		'password' => 'SeeDB',
 		'database' => 'SeeDB',
 	);
-        var $plain_mysql = array(
-            'datasource' => 'plain_mysql',
-            'login' => 'SeeDB',
-            'password' => 'SeeDB',
-        );
+    var $plain_mysql = array(
+        'datasource' => 'plain_mysql',
+        'login' => 'SeeDB',
+        'password' => 'SeeDB',
+    );
 }
 ?>
