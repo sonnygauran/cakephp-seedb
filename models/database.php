@@ -8,7 +8,7 @@ class Database extends AppModel {
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
         var $_schema = array(
                 'id' => array(
-                                'type' => 'integer',
+                                'type' => 'string',
                                 'null' => 'false',
                                 'key' => 'primary',
                                 'length' => 11
@@ -20,6 +20,7 @@ class Database extends AppModel {
                                 'length' => 255
                 )
         );
+        
         var $hasMany = array(
                 'Table' => array(
                                 'className' => 'Table',
@@ -44,7 +45,7 @@ class Database extends AppModel {
             $databases = $this->find('all');
             foreach($databases as $database){
                 if ($database['Database']['id'] == $id){
-                    $this->query("USE {$database['Database']}");
+                    $this->query("USE {$database['Database']['id']}");
                     return true;
                 }
             }

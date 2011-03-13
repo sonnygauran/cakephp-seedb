@@ -64,15 +64,44 @@ class DatabasesController extends AppController {
         function select($id = null) {
                 if (!$id) {
                         $this->Session->setFlash(sprintf(__('Invalid id for %s', true), 'database'));
-                        $this->redirect(array('action'=>'/'));
+                        $this->redirect($this->_root);
                 }
                 if ($this->Database->select($id)) {
-                        $this->Session->setFlash(sprintf(__('%s now selected', true), 'Database'));
-                        $this->Session->write('Database.selected', $id);
-                        $this->redirect(array('action'=>'/'));
+                        $database = $this->Database->read(null, $id);
+                        $this->Session->delete('SeeDB.commands');
+                        $this->Session->write('Database.selected', $database['Database']);
+                        debug($database);
+                        $this->Session->setFlash(sprintf(__(
+                                '%s %s now selected.', true)
+                                , 'Database'
+                                , "<span class=\"database name\">{$database['Database']['name']}</span>")
+                        );
+                        
+                        $this->redirect($this->_root);
                 }
                 $this->Session->setFlash(sprintf(__('%s was not selected', true), 'Database'));
-                $this->redirect(array('action' => '/'));
+                $this->redirect($this->_root);
+        }
+        function deselect($id = null){
+                if (!$id) {
+                        $this->Session->setFlash(sprintf(__('Invalid id for %s', true), 'database'));
+                        $this->redirect($this->_root);
+                }
+                if ($this->Session->delete('Database.selected')) {
+                        $database = $this->Database->read(null, $id);
+                        $this->Session->setFlash(sprintf(__(
+                                '%s %s now deselected.', true)
+                                , 'Database'
+                                , "<span class=\"database name\">{$database['Database']['name']}</span>")
+                        );
+                        $this->redirect($this->_root);
+                }
+                $this->Session->setFlash(sprintf(__('%s cannot be deselected', true), 'Database'));
+                $this->redirect($this->_root);
+        }
+        function enum(){
+            $databases = $this->Database->find('all');
+            $this->set(compact('databases'));
         }
 }
 ?>

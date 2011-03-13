@@ -25,6 +25,12 @@ class Table extends AppModel {
                                 'key' => 'primary',
                                 'length' => 11
                 ),
+                'records' => array(
+                                'type' => 'integer',
+                                'null' => 'false',
+                                'key' => 'primary',
+                                'length' => 11
+                ),
         );
 
         var $belongsTo = array(
@@ -36,5 +42,20 @@ class Table extends AppModel {
                                 'order' => ''
                 )
         );
+        var $hasMany = array(
+                'Row' => array(
+                                'className' => 'Row',
+                                'foreignKey' => 'row_id',
+                                'dependent' => false,
+                                'conditions' => '',
+                                'fields' => '',
+                                'order' => '',
+                                'limit' => '',
+                                'offset' => '',
+                                'exclusive' => '',
+                                'finderQuery' => '',
+                                'counterQuery' => ''
+                )
+	);
 }
 ?>

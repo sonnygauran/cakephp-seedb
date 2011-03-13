@@ -53,11 +53,15 @@ class PlainMysqlSource extends DboMysql {
     public function read($model, $queryData = array()) {
         $databases = $this->_getDatabases();
         $model->tableToModel = array('tables' => 'Table', 'databases' =>'Database');
+//                        debug($queryData['conditions']);
         switch ($model->name) {
             case 'Database':
                 switch ($model->findQueryType) {
                     case 'first':
-                        $me[] = $databases[$queryData['conditions']['Database.id']-1];
+                        foreach($databases as $_db){
+                            if ($_db['Database']['name'] == $queryData['conditions']['Database.id'])
+                                $me[] = $_db;
+                        }
                         return $me;
                         break;
                     case 'all':
@@ -76,19 +80,18 @@ class PlainMysqlSource extends DboMysql {
                 foreach ($databases as $database) {
                     $database_tables = $this->_getTables($database);
                     foreach($database_tables as $table) {
+                        $rows = $this->_getRows($table);
+                        $table['Row'] = $rows['Row'];
                         $tables[] = $table;
                     }
                 }
                 switch ($model->findQueryType) {
                     case 'all':
                         return $tables;
-                        break;
                     case 'count':
                         return count($tables);
-                        break;
                     case 'first':
                         $result = array();
-
                         foreach($tables as $table) {
                             if ($table['Table']['id'] == $queryData['conditions']['Table.id']) {
                                 $result[] = $table;
@@ -104,6 +107,15 @@ class PlainMysqlSource extends DboMysql {
                     default:
                         return $tables;
                         break;
+                }
+                break;
+            case 'Row':
+                $rows = $this->_getRows($model);
+                switch ($model->findQueryType){
+                    case 'all':
+                        return $rows;
+                    case 'count':
+                        return count($rows);
                 }
                 break;
         }
@@ -124,12 +136,14 @@ class PlainMysqlSource extends DboMysql {
         foreach($databases as $database) {
             $current = array (
                     'Database'=>array (
-                            'id' => $counter_db++,
+                            'id' => $database,
                             'name' => $database
                     ),
             );
             $tables = $this->_getTables($current);
             foreach($tables as $table) {
+                $rows = $this->_getRows($table);
+                $table['Table']['Row'] = $rows['Row'];
                 $current['Table'][] = $table['Table'];
             }
             $results[] = $current;
@@ -152,16 +166,34 @@ class PlainMysqlSource extends DboMysql {
 
         $counter_tables = 1;
         foreach($tables as $table) {
+            $sql = 'select count(*) as count from '.$table;
+            $count = $this->query($sql);
+            $count = $count[0][0]['count'];
+
             $current['Table'] = array(
-                    'id' => $database_id.'-'.$counter_tables++,
+                    'id' => $database_name.'|'.$table,
                     'name' => $table,
                     'database_id' =>$database_id,
+                    'records' => $count
             );
+            $rows = $this->_getRows($current);
+            $current['Row'] = $rows['Row'];
             $current['Database'] = $database['Database'];
             $return[] = $current;
         }
-
         return $return;
+    }
+
+    public function _getRows($table){
+        $rows = array();
+        $descriptions = parent::describe($table['Table']['name']);
+        foreach ($descriptions as $fieldName => $fields){
+            $current = $fields;
+            $current['id'] = $table['Table']['id'].'|'.$fieldName;
+            $current['name'] = $fieldName;
+            $rows['Row'][] = $current;
+        }
+        return $rows;
     }
 }
 ?>

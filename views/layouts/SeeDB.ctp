@@ -9,7 +9,7 @@
         </title>
         <?php echo $this->Html->meta('icon'); ?>
         <?php echo $this->Html->css('seedb'); ?>
-        <?php echo $this->Javascript->link(array('jquery-1.4.1.min','SeeDB.plugin.jquery')); ?>
+        <?php echo $this->Javascript->link(array('jquery-1.4.1.min','jquery.SeeDB')); ?>
         <?php echo $scripts_for_layout; ?>
         
     </head>
@@ -21,10 +21,6 @@
 		<div id="content">
 
 			<?php echo $this->Session->flash(); ?>
-
-                            <?php if ($this->Session->check('Database.selected')):?>
-                                    <?php echo $this->Session->read('Database.selected'); ?>
-                            <?php else: ?>No database currently selected.<?php endif; ?>
 
 			<?php echo $content_for_layout; ?>
 

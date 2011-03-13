@@ -31,7 +31,8 @@
  * @subpackage    cake.app
  */
 class AppController extends Controller {
-    var $layout = 'SeeDB';
+  //  var $layout = 'SeeDB';
     var $helpers = array('Html','Session','Javascript');
+    var $_root = array('controller' =>'seedb', 'action'=>'/');
 }
 ?>

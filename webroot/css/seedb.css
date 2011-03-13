@@ -1,14 +1,20 @@
 #header { border-bottom: solid 1px #000; }
 #footer { border-top: solid 1px #000; }
-
 #content {
     
 }
-
+#flashMessage {
+    background: #ccf;
+    padding: 10px;
+}
+    #flashMessage .database.name {
+        border-bottom: solid 1px #444;
+    }
 .databases.list {
     margin: 10px;
+    float: left;
 }
-.databases .name, .databases .warning {
+.databases.list .name, .databases .warning {
     /* overall style settings for .name in seedb/index */
     font: normal normal 10px "Tahoma";
 }
@@ -18,28 +24,93 @@
 }
         /* see .database.list > .database#border */
         .databases.list > .database:last-child { border-bottom: solid 1px #000; }
-.databases > .database >.name {
-    background: #fc0;
+.databases.list > .database.selected > .select {
+    display: none;
+}
+.databases.list > .database >.name {
     display: block; /* to fill the width of .database */
     padding: 5px;
 }
-.databases > .database > .tables > .table,
-.databases > .database > .tables > .warning /* To include "No tables found" */
+.databases.list > .database.selected > .name {
+    background: #fc0;
+}
+.databases.list > .database > .tables > .table,
+.databases.list > .database > .tables > .warning /* To include "No tables found" */
 {
     margin: 3px;
 }
 .databases > .database > .tables > .table > .name {
     
 }
-.commands {
+.tables {
+    display: block;
+    margin-left: 230px;
+    border-left: solid 1px #ccc;
+    font: normal normal 10px "Tahoma";
+    padding: 20px;
+}
+.tables .table {
+    padding: 10px 10px 30px 10px;
+    margin-top: 10px;
+    border-bottom: solid 1px #eee;
+}
+.tables .table > .name{
+    display: block;
+    padding: 5px;
+    border-bottom: dotted 1px #e5e5e5;
+    font-weight: bold;
+    font-size: 12px;
+    text-align: right;
+}
+.table .rows {
+    display: block;
+}
+.table .rows .row {
+    margin: 2px;
+    width: 184px;
+    display: inline-block;
+}
+.table .rows .row > .name {
     
+    
+}
+.table .rows .row > div {
+    color: #ccc;
+}
+.commands {
     margin: 10px;
 }
 .commands > .command {
-    
     margin: 10px;
 }
 .commands > .command > span {
     display: block;
-
+}
+.commands > .command > .text.invalid {
+    background-color: #ff9999;
+}
+/* SeeDB Forms */
+.seedb.form .info {
+    display: block;
+}
+.seedb.form .command.ok,
+.seedb.form .command.warning {
+    position: absolute;
+    margin-top: 3px;
+    margin-left: 8px;
+    background: #fff;
+}
+.seedb.form .command.warning span{
+    display: block;
+    color: #ccc;
+    
+}
+#content .commands,
+.seedb.form .command .database:first-child,
+.seedb.form textarea[name="data[Seedb][commands]"] {
+    font: normal normal normal 12px "Courier New";
+}
+.seedb.form textarea[name="data[Seedb][commands]"]{
+    padding: 5px;
+    padding-top: 16px;
 }
